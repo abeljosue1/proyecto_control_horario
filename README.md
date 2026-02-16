@@ -70,3 +70,18 @@ for update using (auth.uid() = user_id);
 - **Registro/Login**: Gestión de usuarios con Supabase Auth.
 - **Dashboard**: Iniciar, Pausar y Finalizar jornada. 
 - **Historial**: Ver lista de jornadas pasadas.
+
+## Desarrollo y Estándares de UI
+
+Este proyecto cuenta con una **Skill de IA** para garantizar la consistencia en el diseño y código.
+
+- **Definición**: `.agent/skills/rpsoft-ui/SKILL.md`
+- **Uso**: Al solicitar nuevas funcionalidades o componentes de UI, referencia la skill para obtener mejores resultados.
+
+**Ejemplo de Prompt:**
+> "Crea un componente de tabla para el historial, siguiendo los estándares de **RPSoft UI**."
+
+Esto asegura:
+- Uso correcto de Tailwind CSS.
+- Estructura de componentes (Atomic Design).
+- Cumplimiento del DoD (Accesibilidad, Responsive, TypeScript).
