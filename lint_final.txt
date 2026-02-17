@@ -1,0 +1,10 @@
+﻿
+> app_horarios@0.1.0 lint
+> eslint
+
+
+C:\Users\LENOVO\Desktop\app_horarios\utils\supabase\middleware.ts
+  18:58  warning  'options' is defined but never used  @typescript-eslint/no-unused-vars
+
+Ô£û 1 problem (0 errors, 1 warning)
+
