@@ -28,8 +28,9 @@ export default function LoginPage() {
             }
 
             router.push('/');
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err) {
+            const message = err instanceof Error ? err.message : 'Error desconocido';
+            setError(message);
         } finally {
             setLoading(false);
         }

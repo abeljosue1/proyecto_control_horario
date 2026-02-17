@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 export default function SignupPage() {
@@ -29,8 +28,9 @@ export default function SignupPage() {
             }
 
             setMessage('Registro exitoso! Por favor verifica tu email (si aplica) o inicia sesión.');
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err) {
+            const message = err instanceof Error ? err.message : 'Error desconocido';
+            setError(message);
         } finally {
             setLoading(false);
         }

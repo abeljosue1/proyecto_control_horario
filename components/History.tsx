@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { useAuth } from '@/contexts/AuthContext';
 import { WorkSession } from '@/types';
@@ -10,20 +10,15 @@ export default function History() {
     const [sessions, setSessions] = useState<WorkSession[]>([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        if (user) {
-            fetchHistory();
-        }
-    }, [user]);
-
     // Expose a refresh function if needed by parent
-    const fetchHistory = async () => {
+    const fetchHistory = useCallback(async () => {
+        if (!user) return;
         setLoading(true);
         try {
             const { data, error } = await supabase
                 .from('work_sessions')
                 .select('*')
-                .eq('user_id', user?.id)
+                .eq('user_id', user.id)
                 .order('created_at', { ascending: false });
 
             if (error) {
@@ -38,7 +33,13 @@ export default function History() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [user]);
+
+    useEffect(() => {
+        if (user) {
+            fetchHistory();
+        }
+    }, [user, fetchHistory]);
 
     if (loading) return <div>Cargando historial...</div>;
 
@@ -84,8 +85,8 @@ export default function History() {
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${session.status === 'working' ? 'bg-green-100 text-green-800' :
-                                                session.status === 'paused' ? 'bg-yellow-100 text-yellow-800' :
-                                                    'bg-gray-100 text-gray-800'
+                                            session.status === 'paused' ? 'bg-yellow-100 text-yellow-800' :
+                                                'bg-gray-100 text-gray-800'
                                             }`}>
                                             {session.status === 'working' ? 'Activo' :
                                                 session.status === 'paused' ? 'Pausado' : 'Finalizado'}
